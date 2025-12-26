@@ -1,15 +1,12 @@
-// src/api.js
 import axios from 'axios';
 
-// Public API instance
 const API = axios.create({
-  baseURL: 'http://localhost:7000/api',
+  baseURL: process.env.REACT_APP_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Optional: log errors for debugging
 API.interceptors.response.use(
   response => response,
   error => {
