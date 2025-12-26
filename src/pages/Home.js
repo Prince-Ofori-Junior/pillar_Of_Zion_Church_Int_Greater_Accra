@@ -30,11 +30,11 @@ const Home = () => {
   const fetchData = async () => {
     try {
       // Fetch latest events (show only 8)
-      const { data: eventsData } = await API.get('/events');
+      const { data: eventsData } = await API.get('/api/events');
       setEvents(eventsData.events?.slice(-4).reverse() || []);
 
       // Fetch latest sermons (show only 8)
-      const { data: sermonsData } = await API.get('/sermons');
+      const { data: sermonsData } = await API.get('/api/sermons');
       setSermons(sermonsData.sermons?.slice(-4).reverse() || []);
     } catch (err) {
       console.error('Error fetching latest data:', err);
