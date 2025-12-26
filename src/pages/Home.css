@@ -206,77 +206,6 @@ button:hover, .btn:hover {
   transform: translateY(-2px);
 }
 
-/* ===== Responsive Breakpoints ===== */
-
-/* Large desktops */
-@media (max-width: 1200px) {
-  .hero-content h1 {
-    font-size: 2.8rem;
-  }
-
-  .slide-item img {
-    height: 70vh;
-  }
-}
-
-/* Tablets */
-@media (max-width: 992px) {
-  .hero-content h1 {
-    font-size: 2.4rem;
-  }
-
-  .slide-item img {
-    height: 60vh;
-  }
-}
-
-/* Small tablets / large mobiles */
-@media (max-width: 768px) {
-  .feature-cards, .latest-cards {
-    grid-template-columns: 1fr;
-  }
-
-  .slide-item {
-    min-width: 100%;
-  }
-
-  .slide-item img {
-    height: 50vh;
-  }
-
-  .hero-content h1 {
-    font-size: 2rem;
-  }
-
-  .hero-content p {
-    font-size: 1rem;
-  }
-}
-
-/* Phones */
-@media (max-width: 480px) {
-  .hero-slider {
-    height: 50vh;
-  }
-
-  .hero-content {
-    padding: 1rem 1.2rem;
-  }
-
-  .hero-content h1 {
-    font-size: 1.6rem;
-  }
-
-  .hero-content p {
-    font-size: 0.9rem;
-  }
-
-  .slide-btn {
-    font-size: 1.5rem;
-    padding: 0.4rem 0.8rem;
-  }
-}
-
 .custom-card .card-body {
   padding: 0.8rem 1rem;
   text-align: center;
@@ -381,27 +310,6 @@ button:hover, .btn:hover {
   transform: translateY(-3px);
 }
 
-/* ===== Responsive Breakpoints ===== */
-@media (max-width: 1200px) {
-  .feature-card {
-    flex: 0 1 calc(33.33% - 2rem); /* 3 cards per row */
-  }
-}
-
-@media (max-width: 992px) {
-  .feature-card {
-    flex: 0 1 calc(50% - 2rem); /* 2 cards per row */
-  }
-}
-
-@media (max-width: 768px) {
-  .feature-card {
-    flex: 0 1 100%; /* stack on mobile */
-    max-width: 90%;
-  }
-}
-
-
 .video-hero {
   position: relative;
   width: 100%;
@@ -417,7 +325,7 @@ button:hover, .btn:hover {
   border-radius:0px;
   overflow: hidden;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-  /* margin-bottom: 1.5rem; */
+  margin-bottom: 1.5rem;
 }
 
 .video-container video {
@@ -477,13 +385,88 @@ button:hover, .btn:hover {
   margin: 0 auto;         /* center horizontally */
   line-height: 1.8;       /* good line spacing for readability */
 }
-@media (max-width: 768px) {
-  .p1 {
-    font-size: 1.3rem;
-  }
-  .p2 {
-    font-size: 1rem;
+
+/* ===== RESPONSIVE ===== */
+
+/* Large screens (small desktops & large tablets) */
+@media (max-width: 1200px) {
+  .feature-card {
+    flex: 0 1 calc(33.33% - 2rem);
   }
 }
 
+/* Tablets */
+@media (max-width: 992px) {
+  .feature-card {
+    flex: 0 1 calc(50% - 2rem);
+  }
+
+  .hero-slider {
+    height: 75vh;
+  }
+}
+
+/* Tablets & Large Phones */
+@media (max-width: 768px) {
+  /* Hero slider */
+  .hero-slider {
+    height: 65vh;
+  }
+
+  /* Force ONE feature card per row */
+  .feature-cards {
+    justify-content: center;
+  }
+
+  .feature-card {
+    flex: 0 1 100%;
+    max-width: 100%;
+  }
+
+  /* Center slide buttons */
+  .slide-btn {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* Hero text */
+  .hero-content h1 {
+    font-size: 2rem;
+    line-height: 1.3;
+    text-align: center;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  /* Hero slider shorter */
+  .hero-slider {
+    height: 25vh;
+  }
+
+  /* Slide buttons smaller */
+  .slide-btn {
+    font-size: 1.3rem;
+    padding: 0.35rem 0.7rem;
+  }
+
+  /* Reduce side spacing */
+  .slider-wrapper {
+    padding: 0;
+  }
+
+  /* Prevent image cropping awkwardly */
+  .slide-item img {
+    object-position: center;
+  }
+
+  .slide-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  
+}
 
