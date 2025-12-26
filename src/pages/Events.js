@@ -5,7 +5,7 @@ import { format, parseISO } from 'date-fns';
 import '../Events.css';
 import church1 from '../assets/church11.jpg';
 import church2 from '../assets/church11.jpg';
-import { getClientId } from '../utils';
+import { getClientId } from '../utils/utils';
 
 
 const Events = () => {
