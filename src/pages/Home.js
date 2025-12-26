@@ -113,7 +113,7 @@ const Home = () => {
       </div>
       <h3>Donations</h3>
       <p>Support our mission and help the community.</p>
-      <Button onClick={() => window.location.href = '/donations'}>Give</Button>
+      <Button onClick={() => window.location.href = '/api/donations'}>Give</Button>
     </div>
 
     <div className="feature-card">
@@ -122,7 +122,7 @@ const Home = () => {
       </div>
       <h3>Events</h3>
       <p>Join upcoming church events and gatherings.</p>
-      <Button onClick={() => window.location.href = '/events'}>Explore</Button>
+      <Button onClick={() => window.location.href = '/api/events'}>Explore</Button>
     </div>
 
     <div className="feature-card">
@@ -131,7 +131,7 @@ const Home = () => {
       </div>
       <h3>Prayers</h3>
       <p>Submit prayer requests or pray for others.</p>
-      <Button onClick={() => window.location.href = '/prayers'}>Pray</Button>
+      <Button onClick={() => window.location.href = '/api/prayers'}>Pray</Button>
     </div>
 
     <div className="feature-card">
@@ -140,7 +140,7 @@ const Home = () => {
       </div>
       <h3>Sermons</h3>
       <p>Watch or listen to recent sermons and teachings.</p>
-      <Button onClick={() => window.location.href = '/sermons'}>Watch</Button>
+      <Button onClick={() => window.location.href = '/api/sermons'}>Watch</Button>
     </div>
   </div>
 </section>

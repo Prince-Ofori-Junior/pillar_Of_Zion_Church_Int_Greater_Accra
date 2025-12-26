@@ -76,7 +76,7 @@ const Donations = () => {
         donor_name: formData.anonymous ? 'Anonymous' : formData.name,
         campaign: formData.campaign
       };
-      const { data } = await API.post('/donations', payload);
+      const { data } = await API.post('/api/donations', payload);
 
       if (!data.authorization_url) {
         setMessage('Donation failed: missing payment URL');

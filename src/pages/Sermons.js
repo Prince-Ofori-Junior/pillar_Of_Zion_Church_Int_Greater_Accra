@@ -49,7 +49,7 @@ const Sermons = () => {
   useEffect(() => {
     const fetchSermons = async () => {
       try {
-        const res = await API.get('/sermons');
+        const res = await API.get('/api/sermons');
         setSermons(res.data.sermons || []);
         if (res.data.sermons.length > 0) setSelectedSermon(res.data.sermons[0]);
       } catch (err) {
@@ -66,7 +66,7 @@ useEffect(() => {
 
   const fetchComments = async () => {
     try {
-      const res = await API.get(`/sermons/${selectedSermon.id}/comments`);
+      const res = await API.get(`/api/sermons/${selectedSermon.id}/comments`);
       setComments(res.data.comments || []);
     } catch (err) {
       console.error('Failed to fetch comments', err);
@@ -137,7 +137,7 @@ const sendComment = () => {
   const likeSermon = async () => {
     if (!selectedSermon) return;
     try {
-      const res = await API.post(`/sermons/${selectedSermon.id}/like`);
+      const res = await API.post(`/api/sermons/${selectedSermon.id}/like`);
       setSelectedSermon({ ...selectedSermon, likes: res.data.likes });
       setSermons((prev) =>
         prev.map((s) =>
@@ -154,7 +154,7 @@ const sendComment = () => {
     const amount = prompt('Enter donation amount');
     if (!amount) return;
     try {
-      await API.post(`/sermons/${selectedSermon.id}/donate`, { amount });
+      await API.post(`/api/sermons/${selectedSermon.id}/donate`, { amount });
       alert('Thanks!');
     } catch {
       alert('Donation failed');

@@ -31,7 +31,7 @@ const Prayers = () => {
   // Fetch prayers
   const fetchPrayers = async () => {
     try {
-      const { data } = await API.get('/prayers');
+      const { data } = await API.get('/api/prayers');
       setPrayers(data.prayers || []);
     } catch (err) {
       console.error(err);
@@ -46,7 +46,7 @@ const Prayers = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await API.post('/prayers', { title, message, isAnonymous });
+      await API.post('/api/prayers', { title, message, isAnonymous });
       setTitle('');
       setMessage('');
       setIsAnonymous(false);
@@ -66,7 +66,7 @@ const Prayers = () => {
       )
     );
     try {
-      await API.post(`/prayers/${id}/pray`);
+      await API.post(`/api/prayers/${id}/pray`);
     } catch (err) {
       console.error(err);
     }

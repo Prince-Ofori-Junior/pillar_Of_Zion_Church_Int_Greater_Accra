@@ -22,7 +22,7 @@ const Events = () => {
 // Fetch events and mark RSVPs
 const fetchEvents = async () => {
   try {
-    const { data } = await API.get(`/events?client_id=${clientId}`);
+    const { data } = await API.get(`/api/events?client_id=${clientId}`);
     setEvents(data.events || []);
 
     const initialRsvps = {};
@@ -38,7 +38,7 @@ const fetchEvents = async () => {
 // RSVP button
 const handleRSVP = async (eventId) => {
   try {
-    await API.post(`/events/${eventId}/rsvp`, { client_id: clientId });
+    await API.post(`/api/events/${eventId}/rsvp`, { client_id: clientId });
     setRsvps(prev => ({ ...prev, [eventId]: true }));
     alert('RSVP successful!');
   } catch (err) {
