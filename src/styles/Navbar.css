@@ -1,0 +1,121 @@
+:root {
+  --primary: #080119;
+  --primary-dark: #000000;
+  --tab-bg: rgba(255, 255, 255, 0.15);
+  --tab-hover: rgba(255, 255, 255, 0.25);
+  --text-light: #07b8cb;
+}
+
+/* Navbar container */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1rem 2rem;
+  background: rgb(255, 255, 255);
+  backdrop-filter: blur(12px);
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.904);
+}
+
+/* Left side: logo + brand */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Logo */
+.logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 0px;
+}
+
+/* Brand text stacked vertically */
+.nav-brand {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgb(0, 147, 167);
+  text-decoration: none;
+  line-height: 1.2;
+}
+
+/* Right side navigation */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Tabs */
+.nav-tab {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: transparent;
+  color: rgb(0, 147, 167);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.nav-tab:hover {
+  background: var(--tab-hover);
+  transform: translateY(-1px);
+}
+
+/* Active tab (NavLink auto class) */
+.nav-tab.active {
+  background: #ffffff;
+  color: #ecb91e;
+  font-weight: 600;
+}
+
+/* User badge */
+.nav-user {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Responsive: Mobile */
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .navbar-left {
+    margin-bottom: 0.5rem;
+  }
+
+  .navbar-right {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 0.5rem;
+  }
+
+  .nav-tab, .nav-user {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+  }
+}

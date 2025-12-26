@@ -1,0 +1,37 @@
+.btn {
+  background: red;
+  color: red;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  white-space: nowrap; /* keeps button compact */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect */
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+}
+
+/* Active/pressed */
+.btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Disabled state */
+.btn:disabled {
+  background: #b89ee0;
+  opacity: 0.7;
+  cursor: not-allowed;
+  box-shadow: none;
+}

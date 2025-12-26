@@ -1,0 +1,312 @@
+/* ==============================
+   ROOT PAGE
+============================== */
+.donation-page {
+  width: 100%;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* ==============================
+   SPLIT SECTION
+============================== */
+.donation-split {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  padding: 4rem 1.5rem;
+  align-items: center;
+}
+
+.donation-image-side img {
+  width: 100%;
+  max-height: 520px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+}
+
+.donation-form-side {
+  background: #fff;
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+}
+
+.donation-form-side h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* ==============================
+   FORM & INPUTS
+============================== */
+.donation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.donation-form input,
+.donation-form select {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  transition: border 0.25s ease;
+}
+
+.donation-form input:focus,
+.donation-form select:focus {
+  outline: none;
+  border-color: #16a34a;
+  box-shadow: 0 0 0 2px rgba(22,163,52,0.15);
+}
+
+/* ==============================
+   QUICK AMOUNTS
+============================== */
+.quick-amounts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.quick-amounts button {
+  flex: 1 1 30%;
+  padding: 0.6rem 0;
+  border-radius: 8px;
+  border: 1px solid #4b7bec;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.quick-amounts button.active,
+.quick-amounts button:hover {
+  background: #4b7bec;
+  color: #fff;
+  border-color: #4b7bec;
+}
+
+/* ==============================
+   CHECKBOX & LABEL
+============================== */
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* ==============================
+   BUTTONS
+============================== */
+.donation-form button[type="submit"] {
+  background: #4b7bec;
+  color: #fff;
+  border: none;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.donation-form button[type="submit"]:hover {
+  background: #3867d6;
+}
+
+.donation-form button[disabled] {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+.donation-modal .download-btn {
+  background: #2ed573;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 0.8rem;
+  font-weight: 500;
+}
+
+.donation-modal .download-btn:hover {
+  background: #1eae5c;
+}
+
+/* ==============================
+   MESSAGES & NOTES
+============================== */
+.page-message {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #e74c3c;
+}
+
+.secure-note {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 0.5rem;
+}
+
+/* ==============================
+   MODAL
+============================== */
+.donation-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.donation-modal {
+  background: #fff;
+  border-radius: 12px;
+  max-width: 450px;
+  width: 90%;
+  padding: 2rem;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  position: relative;
+  animation: slideIn 0.3s ease-out;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #555;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: #000;
+}
+
+.donation-modal h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #222;
+  font-weight: 600;
+}
+
+/* ==============================
+   RESPONSIVE
+============================== */
+@media (max-width: 900px) {
+  .donation-split { grid-template-columns: 1fr; }
+  .donation-impact { margin-top: -2rem; }
+  .donation-form-side { padding: 2rem; }
+  .donation-hero-overlay h1 { font-size: 2.2rem; }
+}
+
+@media (max-width: 500px) {
+  .donation-modal { padding: 1.5rem; }
+  .quick-amounts button { flex: 1 1 45%; }
+}
+
+/* ==============================
+   DONATION CENTER CTA
+============================== */
+.donation-center-cta {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #f8f9fa;
+}
+
+.donation-center-cta h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+
+
+
+
+/* ===============================
+   HERO SLIDER
+=============================== */
+.parallax-slider-two {
+  position: relative;
+  width: 100%;
+  height: 1000vh; /* adjust height */
+  overflow: hidden;
+}
+
+/* Container for slides */
+.slides-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+
+
+/* Optional overlay */
+.parallax-slider-two::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25); /* dark overlay */
+  pointer-events: none;
+}
+
+/* Optional slide animation (slide in/out) */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+/* ===============================
+   RESPONSIVE
+=============================== */
+@media (max-width: 768px) {
+  .parallax-slider-two {
+    height: 50vh;
+  }
+
+  .slide.active {
+    transform: scale(1.02);
+  }
+}

@@ -1,0 +1,401 @@
+/* Main container */
+.youtube-style-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+}
+
+/* Main Video Section */
+.main-video-section {
+  flex: 2;
+  min-width: 600px;
+}
+
+/* Video Wrapper */
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.video-wrapper video,
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Video Title */
+.video-title {
+  margin: 12px 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #111;
+}
+
+/* Video Actions */
+.video-actions {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.icon-action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: #555;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.icon-action:hover {
+  color: #e74c3c;
+  transform: scale(1.1);
+}
+
+/* Sidebar Section */
+.sidebar-section {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Comments Section */
+.comments-section {
+  margin-bottom: 30px;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.comment-box {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+/* Individual Comments */
+.yt-comment {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.yt-comment.pinned {
+  background-color: #fff4f4;
+  border-left: 3px solid #e74c3c;
+}
+
+.yt-avatar {
+  width: 32px;
+  height: 32px;
+  background-color: #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #fff;
+}
+
+.yt-avatar.small {
+  width: 24px;
+  height: 24px;
+  font-size: 0.75rem;
+}
+
+.yt-comment-body {
+  flex: 1;
+}
+
+.yt-username {
+  font-weight: 600;
+  color: #111;
+  margin-right: 5px;
+}
+
+.yt-comment-text {
+  margin: 2px 0;
+  font-size: 0.9rem;
+}
+
+.yt-actions span {
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #555;
+}
+
+.yt-actions span:hover {
+  color: #e74c3c;
+}
+
+/* Comment Input */
+.comments-section input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+.send-comment-btn {
+  padding: 8px 12px;
+  border: none;
+  background-color: #e74c3c;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.send-comment-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Playlist */
+.playlist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.playlist-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  position: relative;
+}
+
+.playlist-item.selected {
+  border-left: 4px solid #e74c3c;
+  background-color: #fef0f0;
+}
+
+.playlist-thumbnail {
+  width: 120px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  background-color: #000;
+}
+
+.playlist-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  flex: 1;
+}
+
+/* Live Badge */
+.live-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: red;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 3px;
+  z-index: 10;
+}
+
+/* Input search for playlist */
+.sidebar-section input[type="text"] {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+/* Scrollbar Styling */
+.comment-box::-webkit-scrollbar,
+.playlist-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.comment-box::-webkit-scrollbar-thumb,
+.playlist-list::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+.comment-box::-webkit-scrollbar-track,
+.playlist-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .youtube-style-container {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .main-video-section,
+  .sidebar-section {
+    min-width: 100%;
+  }
+
+  .video-wrapper video,
+  .video-wrapper iframe {
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .video-wrapper video,
+  .video-wrapper iframe {
+    height: 220px;
+  }
+
+  .playlist-thumbnail {
+    width: 100px;
+    height: 60px;
+  }
+
+  .video-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .video-wrapper video,
+  .video-wrapper iframe {
+    height: 180px;
+  }
+
+  .playlist-thumbnail {
+    width: 90px;
+    height: 55px;
+  }
+
+  .video-title {
+    font-size: 1.3rem;
+  }
+
+  .icon-action {
+    font-size: 0.9rem;
+  }
+}
+
+
+/* Individual Comments */
+.yt-comment {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.yt-comment.pinned {
+  background-color: #fff4f4;
+  border-left: 3px solid #e74c3c;
+  padding-left: 5px;
+}
+
+/* Avatar */
+.yt-avatar {
+  width: 32px;
+  height: 32px;
+  background-color: #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #fff;
+}
+
+.yt-avatar.small {
+  width: 24px;
+  height: 24px;
+  font-size: 0.75rem;
+}
+
+/* Comment Body */
+.yt-comment-body {
+  flex: 1;
+}
+
+.yt-username {
+  font-weight: 600;
+  color: #111;
+  margin-right: 5px;
+}
+
+.yt-comment-text {
+  margin: 2px 0;
+  font-size: 0.9rem;
+}
+
+/* Actions (Like, Reply, Pin) */
+.yt-actions span {
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #555;
+}
+
+.yt-actions span:hover {
+  color: #e74c3c;
+}
+
+/* ---------------- Nested Replies ---------------- */
+.yt-reply {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  margin-left: 40px; /* indent replies */
+  background-color: #f9f9f9; /* subtle difference */
+  border-radius: 8px;
+  padding: 5px 8px;
+}
+
+.yt-reply .yt-avatar {
+  width: 24px;
+  height: 24px;
+  font-size: 0.75rem;
+}
+
+.yt-reply .yt-comment-body {
+  flex: 1;
+}
+
+.yt-reply .yt-username {
+  font-weight: 500;
+  color: #222;
+}
+
+.yt-reply p {
+  font-size: 0.85rem;
+  margin: 2px 0;
+}

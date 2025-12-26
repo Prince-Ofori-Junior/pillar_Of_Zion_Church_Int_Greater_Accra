@@ -1,0 +1,332 @@
+/* =====================================
+   ROOT & GLOBAL
+===================================== */
+:root {
+  --primary: #0093A7;
+  --primary-dark: #0093A7;
+  --text-dark:#00000097;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --bg-soft: #f9fafb;
+  --radius: 1px;
+}
+
+.container {
+  width: 100%;
+  /* margin: auto; */
+}
+
+/* =====================================
+   HERO / SLIDER
+===================================== */
+.parallax-slider-two {
+  height: 320px;
+  overflow: hidden;
+  border-radius: var(--radius);
+  margin: 2rem 0 3rem;
+}
+
+.slides-container {
+  display: flex;
+  height: 100%;
+}
+
+.slide {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0)
+  );
+}
+
+/* =====================================
+   FILTER BAR
+===================================== */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.4rem;
+  margin-bottom: 2.5rem;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.filter-bar input,
+.filter-bar select {
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+.filter-bar input {
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-bar label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.filter-bar button {
+  padding: 0.65rem 1.1rem;
+  border-radius: 10px;
+  border: none;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.filter-bar button:hover {
+  background: var(--primary-dark);
+}
+
+/* =====================================
+   EVENTS GRID
+===================================== */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2.4rem;
+}
+
+/* =====================================
+   EVENT CARD
+===================================== */
+.card {
+  background: #ffffff;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+/* =====================================
+   CARD IMAGE
+===================================== */
+.card-image {
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 50%,
+    rgba(0,0,0,0.6)
+  );
+}
+
+/* =====================================
+   IMAGE BADGES
+===================================== */
+.event-status {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #ffffff;
+  color: var(--primary);
+  z-index: 2;
+}
+
+.event-status.past {
+  color: var(--text-muted);
+}
+
+.event-countdown {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  padding: 7px 16px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(6px);
+  z-index: 2;
+}
+
+/* =====================================
+   CARD BODY
+===================================== */
+.card-body {
+  padding: 1.5rem 1.6rem 1.9rem;
+}
+
+.product-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.price1 {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.product-description {
+  margin-top: 0.7rem;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #000000a0;
+}
+
+/* =====================================
+   META DETAILS
+===================================== */
+.event-meta {
+  margin-top: 1.1rem;
+  font-size: 0.85rem;
+  color: #00000097;
+}
+
+.event-meta p {
+  margin: 5px 0;
+}
+
+.event-category {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: var(--bg-soft);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #00000097;
+}
+
+/* =====================================
+   ACTIONS
+===================================== */
+.card-actions {
+  margin-top: 1.4rem;
+  display: flex;
+  gap: 12px;
+}
+
+.card-actions button {
+  flex: 1;
+  padding: 0.7rem 0;
+  border-radius: 10px;
+  border: none;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.card-actions button:hover {
+  background: var(--primary-dark);
+}
+
+.rsvp-badge {
+  flex: 1;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #198754;
+  padding: 0.65rem 0;
+  background: rgba(25,135,84,0.1);
+  border-radius: 10px;
+}
+
+/* =====================================
+   CALENDAR VIEW
+===================================== */
+.calendar-view {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.calendar-day h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.calendar-events {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.calendar-card {
+  padding: 1.3rem;
+}
+
+/* =====================================
+   EMPTY STATE
+===================================== */
+.empty-text {
+  text-align: center;
+  font-size: 1rem;
+  color: var(--text-muted);
+  padding: 3rem 0;
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+@media (max-width: 768px) {
+  .parallax-slider-two {
+    height: 340px;
+  }
+
+  .card-image {
+    height: 210px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+  }
+
+  .card-image {
+    height: 280px;
+  }
+}
