@@ -25,9 +25,9 @@ const About = () => {
           {/* Left Column: Contact + Social */}
           <div className="about-contact">
             <h4>Contact Us</h4>
-            <p><FaEnvelope className="icon" /> info@pillarofozion.com</p>
-            <p><FaPhoneAlt className="icon" /> +233 24 123 4567</p>
-            <p><FaMapMarkerAlt className="icon" /> Accra-Kasoa Branch, Ghana</p>
+            <p><FaEnvelope className="icon" /> pillarofzion32@gmail.com</p>
+            <p><FaPhoneAlt className="icon" /> +233 208428411</p>
+            <p><FaMapMarkerAlt className="icon" /> Accra-Kasoa, Roman Winger-Poultry Farm</p>
 
             <h4 style={{ marginTop: '1rem' }}>Connect With Us</h4>
             <div className="social-icons">
