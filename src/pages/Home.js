@@ -270,7 +270,7 @@ const Home = () => {
       muted
       loop
       playsInline
-      className="hero-video"
+      className="hero-video" 
     />
   </div>
 </section>
