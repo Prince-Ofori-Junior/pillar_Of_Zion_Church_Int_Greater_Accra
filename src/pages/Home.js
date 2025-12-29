@@ -107,15 +107,7 @@ const Home = () => {
 <section className="features">
   <h2>Our Features</h2>
   <div className="feature-cards">
-    <div className="feature-card">
-      <div className="feature-icon donation">
-        <i className="fas fa-hand-holding-heart"></i>
-      </div>
-      <h3>Donations</h3>
-      <p>Support our mission and help the community.</p>
-      <Button onClick={() => window.location.href = '/api/donations'}>Give</Button>
-    </div>
-
+    
     <div className="feature-card">
       <div className="feature-icon events">
         <i className="fas fa-calendar-alt"></i>
@@ -142,6 +134,16 @@ const Home = () => {
       <p>Watch or listen to recent sermons and teachings.</p>
       <Button onClick={() => window.location.href = '/api/sermons'}>Watch</Button>
     </div>
+
+    <div className="feature-card">
+      <div className="feature-icon donation">
+        <i className="fas fa-hand-holding-heart"></i>
+      </div>
+      <h3>Donations</h3>
+      <p>Support our mission and help the community.</p>
+      <Button onClick={() => window.location.href = '/api/donations'}>Give</Button>
+    </div>
+    
   </div>
 </section>
 
@@ -174,7 +176,7 @@ const Home = () => {
 <section className="bout-section">
   <div className="bout-content">
     <p className='p1'>
-      Pillar Of Zion is a church that believes in Jesus, a church that loves God and people.
+      Pillar Of Zion is a church that believes in Jesus Christ, a church that loves God and people.
     </p>
     <p className='p2'>
       Overwhelmed by the gift of salvation we have found in Jesus, we have a heart for authentic worship, are passionate about the local church, and are on mission to see God’s kingdom established across the earth.
