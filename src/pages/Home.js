@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Button from '../components/Button';
 import './Home.css';
+
 import img1 from '../assets/image1.jpeg';
 import img2 from '../assets/image2.jpeg';
 import img3 from '../assets/image3.jpeg';
@@ -9,101 +10,167 @@ import img5 from '../assets/image5.jpeg';
 import img6 from '../assets/image6.jpeg';
 import img7 from '../assets/image7.jpeg';
 import img8 from '../assets/image8.jpeg';
-import API from '../api'; 
+import img9 from '../assets/image9.jpeg';
+import img10 from '../assets/image10.jpeg';
+import img11 from '../assets/image11.jpeg';
+import img12 from '../assets/image12.jpeg';
+
+import API from '../api';
 import YouTube from 'react-youtube';
 import heroVideo from '../assets/MONTAGE-1b9e1.mp4';
 
-
-
-
-const images = [img1, img2, img3, img4, img5, img6, img7, img8];
+const images = [
+  img1, img2, img3, img4, img5, img6,
+  img7, img8, img9, img10, img11, img12
+];
 
 const Home = () => {
   const [events, setEvents] = useState([]);
   const [sermons, setSermons] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0); 
   const [isHovered, setIsHovered] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [step, setStep] = useState(window.innerWidth > 768 ? 2 : 1);
 
-  // Fetch latest events and sermons
+  // Handle window resize to switch step
   useEffect(() => {
-  const fetchData = async () => {
-    try {
-      // Fetch latest events (show only 8)
-      const { data: eventsData } = await API.get('/api/events');
-      setEvents(eventsData.events?.slice(-4).reverse() || []);
+    const handleResize = () => setStep(window.innerWidth > 768 ? 2 : 1);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-      // Fetch latest sermons (show only 8)
-      const { data: sermonsData } = await API.get('/api/sermons');
-      setSermons(sermonsData.sermons?.slice(-4).reverse() || []);
-    } catch (err) {
-      console.error('Error fetching latest data:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Cloned images for smooth infinite loop
+  const sliderImages = [
+    ...images.slice(-step),
+    ...images,
+    ...images.slice(0, step)
+  ];
 
-  fetchData();
-}, []);
-
-  // Auto-scroll slider
+  // Set initial index based on step
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (!isHovered) nextSlide();
-    }, 8000);
+    setCurrentIndex(step);
+  }, [step]);
 
+  /* ---------------- FETCH DATA ---------------- */
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data: eventsData } = await API.get('/api/events');
+        setEvents(eventsData.events?.slice(-4).reverse() || []);
+
+        const { data: sermonsData } = await API.get('/api/sermons');
+        setSermons(sermonsData.sermons?.slice(-4).reverse() || []);
+      } catch (err) {
+        console.error('Error fetching latest data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  /* ---------------- AUTO SLIDE ---------------- */
+  useEffect(() => {
+    if (isHovered) return;
+
+    const interval = setInterval(nextSlide, 7000);
     return () => clearInterval(interval);
-  }, [currentIndex, isHovered]);
+  }, [isHovered, step]);
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
+    setIsTransitioning(true);
+    setCurrentIndex(prev => prev + step);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+    setIsTransitioning(true);
+    setCurrentIndex(prev => prev - step);
+  };
+
+  const handleTransitionEnd = () => {
+    const maxIndex = images.length;
+    if (currentIndex >= maxIndex + step) {
+      setIsTransitioning(false);
+      setCurrentIndex(step);
+    }
+    if (currentIndex < step) {
+      setIsTransitioning(false);
+      setCurrentIndex(maxIndex);
+    }
+  };
+
+  /* ---------------- SERMON VIDEO ---------------- */
+  const renderVideo = (sermon) => {
+    const youtubeMatch = sermon.media_url?.match(
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/live\/)([\w-]+)/
+    );
+
+    if (youtubeMatch) {
+      return (
+        <YouTube
+          videoId={youtubeMatch[1]}
+          opts={{ width: '100%', height: '200', playerVars: { autoplay: 0 } }}
+        />
+      );
+    }
+
+    return (
+      <video
+        src={sermon.media_url}
+        controls
+        style={{
+          width: '100%',
+          height: '200px',
+          objectFit: 'cover',
+          borderRadius: 8,
+          background: 'black'
+        }}
+      />
+    );
   };
 
   return (
     <>
-      {/* Hero Slider */}
+      {/* ================= HERO SLIDER ================= */}
       <section className="hero-slider">
         <div
           className="slider-container"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <button className="slide-btn prev" onClick={prevSlide}>&#10094;</button>
+          <button className="slide-btn prev" onClick={prevSlide}>
+            &#10094;
+          </button>
 
-          <div className="slider-wrapper">
-            <div
-              className="slider-images-2"
-              style={{ transform: `translateX(-${currentIndex * 50}%)` }}
-            >
-              {images.map((img, idx) => (
-                <div className="slide-item" key={idx}>
-                  <img src={img} alt={`Slide ${idx}`} />
-                </div>
-              ))}
-              {/* Duplicate first 2 images for infinite scroll */}
-              {images.slice(0, 2).map((img, idx) => (
-                <div className="slide-item" key={`dup-${idx}`}>
-                  <img src={img} alt={`Slide duplicate ${idx}`} />
-                </div>
-              ))}
-            </div>
+          <div
+            className="slider-wrapper"
+            onTransitionEnd={handleTransitionEnd}
+            style={{
+              transform: `translateX(-${(currentIndex * 100) / step}%)`,
+              transition: isTransitioning ? 'transform 0.8s ease-in-out' : 'none'
+            }}
+          >
+            {sliderImages.map((img, idx) => (
+              <div
+                className="slide-item"
+                key={idx}
+                style={{ minWidth: `${100 / step}%` }}
+              >
+                <img src={img} alt={`Slide ${idx}`} />
+              </div>
+            ))}
           </div>
 
-          <button className="slide-btn next" onClick={nextSlide}>&#10095;</button>
-        </div>
-
-        <div className="hero-content">
-          {/* <h1>
-            Welcome to Pillar Of Zion Church International, Accra Kasoa Branch.
-          </h1> */}
+          <button className="slide-btn next" onClick={nextSlide}>
+            &#10095;
+          </button>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* ================= FEATURES ================= */}
+       {/* Features Section */}
 <section className="features">
   <h2>Our Features</h2>
   <div className="feature-cards">
@@ -147,8 +214,7 @@ const Home = () => {
   </div>
 </section>
 
-
-{/* Latest Updates Section */}
+     {/* Latest Updates Section */}
 <section className="latest">
   <h2>Latest Events</h2>
   <div className="latest-cards">
@@ -157,10 +223,13 @@ const Home = () => {
     ) : events.length === 0 ? (
       <p>No events available</p>
     ) : (
-      events.map(event => (
+      events.map((event, idx) => (
         <div key={event.id} className="custom-card">
           <div className="card-image">
-            <img src={event.image || img1} alt={event.title} />
+            <img
+              src={event.image || images[idx % images.length]}
+              alt={event.title}
+            />
           </div>
           <div className="card-body">
             <h3>{event.title}</h3>
@@ -170,6 +239,7 @@ const Home = () => {
       ))
     )}
   </div>
+
 
 
   {/* About Section */}

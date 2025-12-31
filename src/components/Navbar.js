@@ -7,10 +7,12 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
   const [mediaOpen, setMediaOpen] = useState(false);
+  const [ministriesOpen, setMinistriesOpen] = useState(false); // new state
 
   const closeMenus = () => {
     setInfoOpen(false);
     setMediaOpen(false);
+    setMinistriesOpen(false); // close ministries
     setMenuOpen(false);
   };
 
@@ -24,7 +26,6 @@ const Navbar = () => {
         </Link>
       </div>
 
-      {/* Hamburger moved outside of navbar-left */}
       <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
         <span></span>
         <span></span>
@@ -37,31 +38,44 @@ const Navbar = () => {
         </NavLink>
 
         {/* INFO HUB */}
-<div className="nav-dropdown">
-  <span className="nav-tab" onClick={() => setInfoOpen(!infoOpen)}>
-    Info Hub ▾
-  </span>
-  <div className={`nav-dropdown-menu ${infoOpen ? 'open' : ''}`}>
-    <NavLink to="/events" className="nav-dropdown-item" onClick={closeMenus}>Events</NavLink>
-    <NavLink to="/announcements" className="nav-dropdown-item" onClick={closeMenus}>Announcements</NavLink>
-    <NavLink to="/news" className="nav-dropdown-item" onClick={closeMenus}>News</NavLink>
-    <NavLink to="/programs" className="nav-dropdown-item" onClick={closeMenus}>Programs</NavLink>
-  </div>
-</div>
+        <div className="nav-dropdown">
+          <span className="nav-tab" onClick={() => setInfoOpen(!infoOpen)}>
+            Info Hub ▾
+          </span>
+          <div className={`nav-dropdown-menu ${infoOpen ? 'open' : ''}`}>
+            <NavLink to="/events" className="nav-dropdown-item" onClick={closeMenus}>Events</NavLink>
+            <NavLink to="/announcements" className="nav-dropdown-item" onClick={closeMenus}>Announcements</NavLink>
+            <NavLink to="/news" className="nav-dropdown-item" onClick={closeMenus}>News</NavLink>
+            <NavLink to="/programs" className="nav-dropdown-item" onClick={closeMenus}>Programs</NavLink>
+          </div>
+        </div>
 
-{/* MEDIA */}
-<div className="nav-dropdown">
-  <span className="nav-tab" onClick={() => setMediaOpen(!mediaOpen)}>
-    Media ▾
-  </span>
-  <div className={`nav-dropdown-menu ${mediaOpen ? 'open' : ''}`}>
-    <NavLink to="/sermons" className="nav-dropdown-item" onClick={closeMenus}>Sermons</NavLink>
-    <NavLink to="/media/live" className="nav-dropdown-item" onClick={closeMenus}>Live Stream</NavLink>
-    <NavLink to="/media/videos" className="nav-dropdown-item" onClick={closeMenus}>Videos</NavLink>
-    <NavLink to="/media/audio" className="nav-dropdown-item" onClick={closeMenus}>Audio</NavLink>
-    <NavLink to="/media/gallery" className="nav-dropdown-item" onClick={closeMenus}>Gallery</NavLink>
-  </div>
-</div>
+        {/* MEDIA */}
+        <div className="nav-dropdown">
+          <span className="nav-tab" onClick={() => setMediaOpen(!mediaOpen)}>
+            Media ▾
+          </span>
+          <div className={`nav-dropdown-menu ${mediaOpen ? 'open' : ''}`}>
+            <NavLink to="/sermons" className="nav-dropdown-item" onClick={closeMenus}>Sermons</NavLink>
+            <NavLink to="/media/live" className="nav-dropdown-item" onClick={closeMenus}>Live Stream</NavLink>
+            <NavLink to="/media/videos" className="nav-dropdown-item" onClick={closeMenus}>Videos</NavLink>
+            <NavLink to="/media/audio" className="nav-dropdown-item" onClick={closeMenus}>Audio</NavLink>
+            <NavLink to="/media/gallery" className="nav-dropdown-item" onClick={closeMenus}>Gallery</NavLink>
+          </div>
+        </div>
+
+        {/* MINISTRIES */}
+        <div className="nav-dropdown">
+          <span className="nav-tab" onClick={() => setMinistriesOpen(!ministriesOpen)}>
+            Ministries ▾
+          </span>
+          <div className={`nav-dropdown-menu ${ministriesOpen ? 'open' : ''}`}>
+            <NavLink to="/ministries/youth" className="nav-dropdown-item" onClick={closeMenus}>Youth Ministry</NavLink>
+            <NavLink to="/ministries/women" className="nav-dropdown-item" onClick={closeMenus}>Women Ministry</NavLink>
+            <NavLink to="/ministries/men" className="nav-dropdown-item" onClick={closeMenus}>Men Ministry</NavLink>
+            <NavLink to="/ministries/children" className="nav-dropdown-item" onClick={closeMenus}>Children Ministry</NavLink>
+          </div>
+        </div>
 
         <NavLink to="/donations" className="nav-tab" onClick={closeMenus}>Donate</NavLink>
         <NavLink to="/prayers" className="nav-tab" onClick={closeMenus}>Prayers</NavLink>

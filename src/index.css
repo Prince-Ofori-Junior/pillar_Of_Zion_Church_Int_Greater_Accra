@@ -14,5 +14,5 @@ html, body {
 }
 
 .app-content {
-  flex: 1; /* Pushes footer to bottom */
+  flex: 1; 
 }
