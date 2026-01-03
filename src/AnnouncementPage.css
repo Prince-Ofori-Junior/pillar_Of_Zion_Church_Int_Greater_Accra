@@ -1,0 +1,143 @@
+/* =====================================
+   ANNOUNCEMENTS PAGE
+===================================== */
+
+/* ROOT & GLOBAL */
+:root {
+  --primary: #0093A7;
+  --primary-dark: #007788;
+  --text-dark: #00000097;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --bg-soft: #f9fafb;
+  --radius: 0px;
+}
+
+.page-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* HERO */
+.parallax-slider-two {
+  overflow: hidden;
+  border-radius: var(--radius);
+  min-height: 20vh;
+}
+
+.slide-content h1 {
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+  font-size: 2rem;
+  color: #fff;
+  font-weight: 800;
+}
+
+/* ANNOUNCEMENT GRID */
+.announcement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2.4rem;
+  margin-top: 2rem;
+}
+
+/* ANNOUNCEMENT CARD */
+.announcement-card {
+  background: #ffffff;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.announcement-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+/* CARD IMAGE */
+.announcement-img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  position: relative;
+}
+
+.announcement-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 50%,
+    rgba(0,0,0,0.6)
+  );
+}
+
+/* CARD BODY */
+.announcement-content {
+  padding: 1.5rem 1.6rem 1.9rem;
+}
+
+.announcement-content h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.announcement-date {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.7rem;
+}
+
+.announcement-content p {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #000000a0;
+  margin-bottom: 1rem;
+}
+
+.announcement-link {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.announcement-link:hover {
+  background: var(--primary-dark);
+}
+
+/* EMPTY STATE */
+.empty-text {
+  text-align: center;
+  font-size: 1rem;
+  color: var(--text-muted);
+  padding: 3rem 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .announcement-img {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .announcement-grid {
+    grid-template-columns: 1fr;
+  }
+  .announcement-img {
+    height: 180px;
+  }
+}

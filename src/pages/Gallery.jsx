@@ -1,26 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import './Gallery.css';
 import API from '../api';
+import About from '../components/About'; // ✅ ADD THIS
 
 const Gallery = () => {
-  const [images, setImages] = useState([]);
+  const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Fetch all images from backend
+  /* ======================
+     Fetch PUBLIC gallery
+  ====================== */
   useEffect(() => {
-    const fetchImages = async () => {
+    const fetchGallery = async () => {
       try {
-        const { data } = await API.get('/api/gallery'); 
-        setImages(data.images || []);
+        const { data } = await API.get('/api/gallery');
+        setGallery(data.gallery || []); // ✅ backend-aligned
       } catch (err) {
-        console.error('Error fetching gallery images:', err);
+        console.error('Failed to load gallery:', err);
       } finally {
         setLoading(false);
       }
     };
-    fetchImages();
+
+    fetchGallery();
   }, []);
 
   const openLightbox = (index) => {
@@ -29,47 +33,67 @@ const Gallery = () => {
   };
 
   const closeLightbox = () => setLightboxOpen(false);
+
   const nextImage = () =>
-    setCurrentIndex((prev) => (prev + 1) % images.length);
+    setCurrentIndex((prev) => (prev + 1) % gallery.length);
+
   const prevImage = () =>
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+    setCurrentIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
 
   return (
-    <div className="gallery-page">
-      <h2>Gallery</h2>
+    <>
+      <div className="gallery-page">
+        <h2>Photo Gallery</h2>
 
-      {loading ? (
-        <p>Loading images...</p>
-      ) : images.length === 0 ? (
-        <p>No images available</p>
-      ) : (
-        <div className="masonry">
-          {images.map((img, idx) => (
-            <div
-              className="masonry-item"
-              key={img.id || idx}
-              onClick={() => openLightbox(idx)}
-            >
-              <img src={img.url} alt={img.title || 'Gallery Image'} />
-            </div>
-          ))}
-        </div>
-      )}
+        {loading ? (
+          <p>Loading gallery...</p>
+        ) : gallery.length === 0 ? (
+          <p>No photos uploaded yet.</p>
+        ) : (
+          <div className="masonry">
+            {gallery.map((item, index) => (
+              <div
+                key={item.id}
+                className="masonry-item"
+                onClick={() => openLightbox(index)}
+              >
+                <img
+                  src={item.image}
+                  alt={item.title || 'Gallery image'}
+                />
+              </div>
+            ))}
+          </div>
+        )}
 
-      {lightboxOpen && (
-        <div className="lightbox">
-          <span className="close" onClick={closeLightbox}>&times;</span>
-          <span className="prev" onClick={prevImage}>&#10094;</span>
-          <img
-            className="lightbox-image"
-            src={images[currentIndex].url}
-            alt={images[currentIndex].title}
-          />
-          <span className="next" onClick={nextImage}>&#10095;</span>
-          <div className="caption">{images[currentIndex].title}</div>
-        </div>
-      )}
-    </div>
+        {/* ======================
+           Lightbox
+        ====================== */}
+        {lightboxOpen && (
+          <div className="lightbox">
+            <span className="close" onClick={closeLightbox}>&times;</span>
+            <span className="prev" onClick={prevImage}>&#10094;</span>
+
+            <img
+              className="lightbox-image"
+              src={gallery[currentIndex].image}
+              alt={gallery[currentIndex].title}
+            />
+
+            <span className="next" onClick={nextImage}>&#10095;</span>
+
+            {gallery[currentIndex].title && (
+              <div className="caption">
+                {gallery[currentIndex].title}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* ✅ About Section */}
+      <About />
+    </>
   );
 };
 

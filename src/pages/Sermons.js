@@ -60,89 +60,80 @@ const Sermons = () => {
   }, []);
 
   // Comments WebSocket
-  // Fetch existing comments when a sermon is selected
-useEffect(() => {
-  if (!selectedSermon) return;
+  useEffect(() => {
+    if (!selectedSermon) return;
 
-  const fetchComments = async () => {
-    try {
-      const res = await API.get(`/api/sermons/${selectedSermon.id}/comments`);
-      setComments(res.data.comments || []);
-    } catch (err) {
-      console.error('Failed to fetch comments', err);
-    }
-  };
-
-  fetchComments();
-
-  // WebSocket for live comments
-  const ws = new WebSocket(`ws://localhost:7000/ws/comments?sermonId=${selectedSermon.id}`);
-  ws.onopen = () => {
-    console.log('Comments WebSocket connected');
-    socketRef.current = ws;
-  };
-
-  ws.onmessage = (msg) => {
-    try {
-      const data = JSON.parse(msg.data);
-      setComments(prev => [...prev, data.comment || data]);
-      const commentBox = document.getElementById('comment-box');
-      if (commentBox) commentBox.scrollTop = commentBox.scrollHeight;
-    } catch (err) {
-      console.error('Failed to parse comment', err);
-    }
-  };
-
-  ws.onclose = () => {
-    console.log('Comments WebSocket closed');
-    if (socketRef.current === ws) socketRef.current = null;
-  };
-
-  return () => ws.close();
-}, [selectedSermon]);
-
-
- // ----------------- sendComment -----------------
-const sendComment = () => {
-  if (!newComment.trim()) return;
-
-  const ws = socketRef.current;
-
-  if (ws?.readyState === WebSocket.OPEN) {
-    ws.send(JSON.stringify({
-      type: 'NEW_COMMENT',
-      content: newComment, // <-- must match backend
-      user_name: 'Anonymous' // replace with actual username
-    }));
-    setNewComment('');
-  } else {
-    console.warn('WebSocket is not open yet, comment will be sent when ready');
-
-    const retry = setInterval(() => {
-      if (socketRef.current?.readyState === WebSocket.OPEN) {
-        socketRef.current.send(JSON.stringify({
-          type: 'NEW_COMMENT',
-          content: newComment,
-          user_name: 'Anonymous'
-        }));
-        setNewComment('');
-        clearInterval(retry);
+    const fetchComments = async () => {
+      try {
+        const res = await API.get(`/api/sermons/${selectedSermon.id}/comments`);
+        setComments(res.data.comments || []);
+      } catch (err) {
+        console.error('Failed to fetch comments', err);
       }
-    }, 200);
-  }
-};
+    };
 
+    fetchComments();
 
+    const ws = new WebSocket(`ws://localhost:7000/ws/comments?sermonId=${selectedSermon.id}`);
+    ws.onopen = () => {
+      console.log('Comments WebSocket connected');
+      socketRef.current = ws;
+    };
+
+    ws.onmessage = (msg) => {
+      try {
+        const data = JSON.parse(msg.data);
+        setComments(prev => [...prev, data.comment || data]);
+        const commentBox = document.getElementById('comment-box');
+        if (commentBox) commentBox.scrollTop = commentBox.scrollHeight;
+      } catch (err) {
+        console.error('Failed to parse comment', err);
+      }
+    };
+
+    ws.onclose = () => {
+      console.log('Comments WebSocket closed');
+      if (socketRef.current === ws) socketRef.current = null;
+    };
+
+    return () => ws.close();
+  }, [selectedSermon]);
+
+  // ----------------- sendComment -----------------
+  const sendComment = () => {
+    if (!newComment.trim()) return;
+
+    const ws = socketRef.current;
+
+    if (ws?.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({
+        type: 'NEW_COMMENT',
+        content: newComment,
+        user_name: 'Anonymous'
+      }));
+      setNewComment('');
+    } else {
+      const retry = setInterval(() => {
+        if (socketRef.current?.readyState === WebSocket.OPEN) {
+          socketRef.current.send(JSON.stringify({
+            type: 'NEW_COMMENT',
+            content: newComment,
+            user_name: 'Anonymous'
+          }));
+          setNewComment('');
+          clearInterval(retry);
+        }
+      }, 200);
+    }
+  };
 
   const likeSermon = async () => {
     if (!selectedSermon) return;
     try {
       const res = await API.post(`/api/sermons/${selectedSermon.id}/like`);
       setSelectedSermon({ ...selectedSermon, likes: res.data.likes });
-      setSermons((prev) =>
-        prev.map((s) =>
-          s.id === selectedSermon.id ? { ...s, likes: res.data.likes } : s
-        )
+      setSermons(prev =>
+        prev.map(s => s.id === selectedSermon.id ? { ...s, likes: res.data.likes } : s)
       );
     } catch {
       alert('Failed to like');
@@ -181,11 +172,7 @@ const sendComment = () => {
     } catch (err) {
       console.error('Error parsing social_streams', err);
     }
-    return (
-      streams.find(
-        (url) => url.includes('youtube.com') || url.includes('youtu.be')
-      ) || null
-    );
+    return streams.find(url => url.includes('youtube.com') || url.includes('youtu.be')) || null;
   };
 
   const joinYouTubeLive = () => {
@@ -197,35 +184,57 @@ const sendComment = () => {
     window.open(liveUrl, '_blank');
   };
 
-  // Render Video
+  // ----------------- renderVideo -----------------
   const renderVideo = (sermon) => {
-    const { media_url, cameras } = sermon;
-    const liveUrl = getYouTubeLiveUrl(sermon);
-    const videoUrl = media_url || liveUrl;
-    const youtubeMatch = videoUrl?.match(
-      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/live\/)([\w-]+)/
-    );
+    const { media_url, cameras, tiktokUsername, social_streams } = sermon;
 
-    if (youtubeMatch) {
-      const videoId = youtubeMatch[1];
+    // --- TikTok Live ---
+    if (tiktokUsername) {
+      const embedUrl = `https://www.tiktok.com/embed/live/@${tiktokUsername}`;
       return (
-        <YouTube
-          videoId={videoId}
-          opts={{ width: '100%', height: '100%', playerVars: { autoplay: 0 } }}
+        <iframe
+          src={embedUrl}
+          width="100%"
+          height="100%"
+          style={{ border: 'none', borderRadius: 8 }}
+          allow="autoplay; fullscreen"
+          allowFullScreen
         />
       );
     }
 
+    // --- YouTube ---
+    let streams = [];
+    try {
+      streams =
+        typeof social_streams === 'string' ? JSON.parse(social_streams) : social_streams || [];
+    } catch (err) {
+      console.error('Error parsing social_streams', err);
+    }
+    const youtubeUrl = streams.find(url => url.includes('youtube.com') || url.includes('youtu.be'));
+    if (youtubeUrl) {
+      const match = youtubeUrl.match(/(?:v=|be\/|live\/)([\w-]+)/);
+      if (match) {
+        const videoId = match[1];
+        return (
+          <YouTube
+            videoId={videoId}
+            opts={{ width: '100%', height: '100%', playerVars: { autoplay: 0 } }}
+          />
+        );
+      }
+    }
+
+    // --- HLS or local ---
     const hlsUrl = cameras?.[0]?.hlsUrl || null;
-    return <VideoPlayer src={media_url} hlsUrl={hlsUrl} />;
+    if (media_url || hlsUrl) return <VideoPlayer src={media_url} hlsUrl={hlsUrl} />;
+
+    return <div style={{ color: '#fff', textAlign: 'center', padding: 20 }}>Video not available</div>;
   };
 
-  const filteredSermons = sermons.filter((s) =>
-    s.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  // Helper: Get YouTube Thumbnail URL (live or regular)
-  const getYouTubeThumbnail = (s) => {
+  // ----------------- getVideoThumbnail -----------------
+  const getVideoThumbnail = (s) => {
+    if (s.tiktokUsername) return '/images/tiktok-live-placeholder.jpg'; // add placeholder image in public folder
     const liveUrl = getYouTubeLiveUrl(s);
     const videoUrl = s.media_url || liveUrl;
     const match = videoUrl?.match(/(?:v=|be\/|live\/)([\w-]+)/);
@@ -235,6 +244,9 @@ const sendComment = () => {
       ? `https://img.youtube.com/vi/${videoId}/maxresdefault_live.jpg`
       : `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
   };
+
+  // Filtered sermons for playlist
+  const filteredSermons = sermons.filter(s => s.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
     <>
@@ -275,35 +287,33 @@ const sendComment = () => {
             <>
               <div className="comments-section">
                 <h4>Comments</h4>
-               <div id="comment-box" className="comment-box">
-  {comments
-    .sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0)) // pinned first
-    .map((c) => (
-      <div key={c.id} className={`yt-comment ${c.pinned ? 'pinned' : ''}`}>
-        <div className="yt-avatar">{c.user_name?.charAt(0).toUpperCase() || 'U'}</div>
-        <div className="yt-comment-body">
-          <span className="yt-username">{c.user_name || 'User'}</span>
-          <p className="yt-comment-text">{c.content}</p> {/* <-- use content */}
-          <div className="yt-actions">
-            <span onClick={() => console.log('Like', c.id)}>👍 {c.likes || 0}</span>
-            <span onClick={() => console.log('Reply to', c.id)}>Reply</span>
-            <span onClick={() => console.log('Pin', c.id)}>📌</span>
-          </div>
+                <div id="comment-box" className="comment-box">
+                  {comments
+                    .sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0))
+                    .map((c) => (
+                      <div key={c.id} className={`yt-comment ${c.pinned ? 'pinned' : ''}`}>
+                        <div className="yt-avatar">{c.user_name?.charAt(0).toUpperCase() || 'U'}</div>
+                        <div className="yt-comment-body">
+                          <span className="yt-username">{c.user_name || 'User'}</span>
+                          <p className="yt-comment-text">{c.content}</p>
+                          <div className="yt-actions">
+                            <span onClick={() => console.log('Like', c.id)}>👍 {c.likes || 0}</span>
+                            <span onClick={() => console.log('Reply to', c.id)}>Reply</span>
+                            <span onClick={() => console.log('Pin', c.id)}>📌</span>
+                          </div>
 
-          {/* REPLIES */}
-          {c.replies?.map((r) => (
-            <div key={r.id} className="yt-reply">
-              <div className="yt-avatar small">{r.user_name?.charAt(0).toUpperCase() || 'U'}</div>
-              <div>
-                <span className="yt-username">{r.user_name}</span>
-                <p>{r.content}</p> {/* <-- use content */}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-))}
-
+                          {c.replies?.map((r) => (
+                            <div key={r.id} className="yt-reply">
+                              <div className="yt-avatar small">{r.user_name?.charAt(0).toUpperCase() || 'U'}</div>
+                              <div>
+                                <span className="yt-username">{r.user_name}</span>
+                                <p>{r.content}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
                 </div>
                 <input
                   placeholder="Write a comment..."
@@ -311,10 +321,7 @@ const sendComment = () => {
                   onChange={(e) => setNewComment(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && sendComment()}
                 />
-                <button
-                  onClick={sendComment}
-                  className="send-comment-btn"
-                >
+                <button onClick={sendComment} className="send-comment-btn">
                   Send
                 </button>
               </div>
@@ -331,23 +338,20 @@ const sendComment = () => {
                 {filteredSermons.map((s) => {
                   const liveUrl = getYouTubeLiveUrl(s);
                   const isYouTube = !!liveUrl;
-                  const isLocalVideo = !!s.media_url && !isYouTube;
-                  const isLive = !!liveUrl;
+                  const isLocalVideo = !!s.media_url && !isYouTube && !s.tiktokUsername;
+                  const isLive = !!liveUrl || !!s.tiktokUsername;
 
                   return (
                     <div
                       key={s.id}
-                      className={`playlist-item ${
-                        s.id === selectedSermon?.id ? 'selected' : ''
-                      }`}
+                      className={`playlist-item ${s.id === selectedSermon?.id ? 'selected' : ''}`}
                       onClick={() => {
                         setSelectedSermon(s);
                         setComments([]);
                       }}
                       onMouseEnter={() => {
                         if (isLocalVideo) {
-                          const video =
-                            playlistVideoRefs.current[s.id];
+                          const video = playlistVideoRefs.current[s.id];
                           if (video) {
                             video.currentTime = 0;
                             video.muted = true;
@@ -357,17 +361,14 @@ const sendComment = () => {
                       }}
                       onMouseLeave={() => {
                         if (isLocalVideo) {
-                          const video =
-                            playlistVideoRefs.current[s.id];
+                          const video = playlistVideoRefs.current[s.id];
                           if (video) video.pause();
                         }
                       }}
                     >
                       {isLocalVideo ? (
                         <video
-                          ref={(el) =>
-                            (playlistVideoRefs.current[s.id] = el)
-                          }
+                          ref={(el) => (playlistVideoRefs.current[s.id] = el)}
                           src={s.media_url}
                           className="playlist-thumbnail"
                           preload="metadata"
@@ -375,18 +376,12 @@ const sendComment = () => {
                         />
                       ) : (
                         <>
-                          {isYouTube && (
-                            <img
-                              src={`https://img.youtube.com/vi/${liveUrl.match(
-                                /(?:v=|be\/|live\/)([\w-]+)/
-                              )[1]}/hqdefault.jpg`}
-                              className="playlist-thumbnail"
-                              alt={s.title}
-                            />
-                          )}
-                          {isLive && (
-                            <span className="live-badge">LIVE</span>
-                          )}
+                          <img
+                            src={getVideoThumbnail(s)}
+                            className="playlist-thumbnail"
+                            alt={s.title}
+                          />
+                          {isLive && <span className="live-badge">LIVE</span>}
                         </>
                       )}
                       <p className="playlist-title">{s.title}</p>

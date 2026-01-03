@@ -45,8 +45,6 @@ const Navbar = () => {
           <div className={`nav-dropdown-menu ${infoOpen ? 'open' : ''}`}>
             <NavLink to="/events" className="nav-dropdown-item" onClick={closeMenus}>Events</NavLink>
             <NavLink to="/announcements" className="nav-dropdown-item" onClick={closeMenus}>Announcements</NavLink>
-            <NavLink to="/news" className="nav-dropdown-item" onClick={closeMenus}>News</NavLink>
-            <NavLink to="/programs" className="nav-dropdown-item" onClick={closeMenus}>Programs</NavLink>
           </div>
         </div>
 
@@ -57,9 +55,6 @@ const Navbar = () => {
           </span>
           <div className={`nav-dropdown-menu ${mediaOpen ? 'open' : ''}`}>
             <NavLink to="/sermons" className="nav-dropdown-item" onClick={closeMenus}>Sermons</NavLink>
-            <NavLink to="/media/live" className="nav-dropdown-item" onClick={closeMenus}>Live Stream</NavLink>
-            <NavLink to="/media/videos" className="nav-dropdown-item" onClick={closeMenus}>Videos</NavLink>
-            <NavLink to="/media/audio" className="nav-dropdown-item" onClick={closeMenus}>Audio</NavLink>
             <NavLink to="/media/gallery" className="nav-dropdown-item" onClick={closeMenus}>Gallery</NavLink>
           </div>
         </div>

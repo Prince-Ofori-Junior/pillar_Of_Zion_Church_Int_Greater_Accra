@@ -1,0 +1,172 @@
+/* ============================
+   GALLERY PAGE
+============================ */
+.gallery-page {
+  max-width: 1400px;  /* increased container width */
+  margin: 0 auto;
+  padding: 80px 30px; /* more padding for breathing room */
+}
+
+.gallery-page h2 {
+  text-align: center;
+  font-size: 3rem; /* bigger title */
+  margin-bottom: 50px;
+  color: #1f2937;
+  font-weight: 700;
+}
+
+/* ============================
+   MASONRY GRID
+============================ */
+.masonry {
+  column-count: 4;
+  column-gap: 20px; /* wider gap */
+}
+
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 20px; /* more spacing between items */
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border-radius: 1px; /* slightly rounded edges */
+  background: #f3f4f6;
+}
+
+.masonry-item img {
+  width: 100%;
+  height: auto; /* let height scale naturally */
+  min-height: 200px; /* minimum height for bigger appearance */
+  display: block;
+  border-radius: 1px;
+  transition: transform 0.4s ease;
+}
+
+.masonry-item:hover img {
+  transform: scale(1.1);
+}
+
+/* Subtle overlay */
+.masonry-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 40%,
+    rgba(0, 0, 0, 0.45)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.masonry-item:hover::after {
+  opacity: 1;
+}
+
+/* ============================
+   LIGHTBOX
+============================ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.lightbox-image {
+  max-width: 95%; /* bigger lightbox */
+  max-height: 90%; /* taller lightbox */
+  border-radius: 12px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* Caption */
+.caption {
+  position: absolute;
+  bottom: 40px; /* more space from bottom */
+  color: #e5e7eb;
+  font-size: 1.2rem; /* bigger caption text */
+  text-align: center;
+  width: 100%;
+  padding: 0 20px;
+}
+
+/* Controls */
+.close,
+.prev,
+.next {
+  position: absolute;
+  color: #fff;
+  font-size: 3rem; /* larger controls */
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  opacity: 0.85;
+}
+
+.close:hover,
+.prev:hover,
+.next:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.close {
+  top: 30px;
+  right: 35px;
+}
+
+.prev {
+  left: 35px;
+}
+
+.next {
+  right: 35px;
+}
+
+/* ============================
+   LOADING & EMPTY STATES
+============================ */
+.gallery-page p {
+  text-align: center;
+  color: #6b7280;
+  font-size: 1.2rem;
+}
+
+/* ============================
+   RESPONSIVE
+============================ */
+@media (max-width: 1400px) {
+  .masonry {
+    column-count: 3;
+  }
+}
+
+@media (max-width: 1024px) {
+  .masonry {
+    column-count: 2;
+  }
+
+  .gallery-page h2 {
+    font-size: 2.5rem;
+  }
+
+  .prev,
+  .next {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .masonry {
+    column-count: 1;
+  }
+
+  .close {
+    font-size: 2.5rem;
+  }
+}
